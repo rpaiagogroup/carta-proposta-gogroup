@@ -118,6 +118,10 @@ const processedData = {
 
     recrutador: recrutador,
 
+    // Store Fields
+    horario: body.storeSchedule || '',
+    tipoVaga: body.jobType || 'Corporate',
+
     // Flag de unidade Extrema
     isExtrema: String(unidade || '').trim().toLowerCase() === 'extrema',
 

@@ -125,11 +125,12 @@ const StepFinal = () => {
                 <dl className="p-6 grid grid-cols-2 gap-y-6 gap-x-4">
                     <SummaryItem label="Candidato" value={state.candidateName} />
                     <SummaryItem label="Recrutador Resp." value={state.recruiterName} />
-                    <SummaryItem label="Unidade de Negócio" value={state.businessUnit} />
-                    <SummaryItem label="Área / Time" value={state.area} />
-                    <SummaryItem label="Gestor Imediato" value={state.manager} />
+                    {state.businessUnit && <SummaryItem label="Unidade de Negócio" value={state.businessUnit} />}
+                    {state.area && <SummaryItem label="Área / Time" value={state.area} />}
+                    {state.manager && <SummaryItem label="Gestor Imediato" value={state.manager} />}
                     <SummaryItem label="Data de Início" value={state.startDate?.split('-').reverse().join('/')} />
                     <SummaryItem label="Local de Trabalho" value={`${state.locationUnit} ${state.workplaceType ? `- ${state.workplaceType}` : ''}`} />
+                    {state.storeSchedule && <SummaryItem label="Horário" value={state.storeSchedule} />}
                 </dl>
             </div>
 

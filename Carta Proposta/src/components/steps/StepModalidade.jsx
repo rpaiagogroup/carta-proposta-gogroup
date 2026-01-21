@@ -29,9 +29,14 @@ const StepModalidade = () => {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
+        // Auto-select CLT for Store
+        if (state.jobType === 'Store' && state.modalidade !== 'CLT') {
+            updateField('modalidade', 'CLT');
+        }
+
         // Recalculate VR whenever: location, modalidade, OR workplaceType changes
         if (state.locationUnit && state.modalidade) {
-            const info = calculateVR(state.locationUnit, state.modalidade, state.workplaceType);
+            const info = calculateVR(state.locationUnit, state.modalidade, state.workplaceType, state.jobType);
             setVrInfo(info);
 
             // Auto-set VR value if fixed or composite
@@ -43,7 +48,7 @@ const StepModalidade = () => {
         } else {
             setVrInfo(null);
         }
-    }, [state.locationUnit, state.modalidade, state.workplaceType]);
+    }, [state.locationUnit, state.modalidade, state.workplaceType, state.jobType]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

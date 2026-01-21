@@ -8,6 +8,7 @@ export const VR_RULES = {
     //    -> Select options (CX 17, AZBUY 28, GRA 25, ESCRITORIO CE 25, ESCRITORIO SP 40)
 
     FACTORY_LOCATIONS: ['Extrema', 'Itapeva', 'Itapevi'],
+    STORE_LOCATIONS: ['Anália Franco', 'Iguatemi', 'Park Shopping Brasília'],
     OFFICE_only_OPTIONS: [
         { value: 'CX - R$ 17,00', label: 'CX - R$ 17,00' },
         { value: 'AZBUY - R$ 28,00', label: 'AZBUY - R$ 28,00' },
@@ -24,12 +25,28 @@ export const VR_RULES = {
 
     OFFICE_FIXED_VALUE: 400,
 
-    ESTAGIO_FIXED: 200
+    ESTAGIO_FIXED: 200,
+
+    STORE_VR_VALUES: {
+        'Anália Franco': 14.00,
+        'Iguatemi': 14.00,
+        'Park Shopping Brasília': 21.00
+    }
 };
 
-export const calculateVR = (location, modalidade, workplaceType) => {
+export const calculateVR = (location, modalidade, workplaceType, jobType = 'Corporate') => {
     if (modalidade === 'PJ') return null;
     if (modalidade === 'Estágio') return { value: VR_RULES.ESTAGIO_FIXED, type: 'fixed', label: 'Estágio' };
+
+    // Store Logic
+    if (jobType === 'Store') {
+        const value = VR_RULES.STORE_VR_VALUES[location] || 0;
+        return {
+            value: value,
+            type: 'fixed',
+            label: `Loja - R$ ${value.toFixed(2).replace('.', ',')}`
+        };
+    }
 
     // CLT Logic
     const isFactoryLoc = VR_RULES.FACTORY_LOCATIONS.includes(location);
