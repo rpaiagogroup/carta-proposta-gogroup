@@ -1,5 +1,5 @@
 
-const REQUIRED_COMMON = ['candidateName', 'roleTitle', 'startDate', 'locationUnit', 'recruiterName', 'aiCase'];
+const REQUIRED_COMMON = ['candidateName', 'roleTitle', 'startDate', 'locationUnit', 'recruiterName'];
 
 export const validateStep1 = (data) => {
     const errors = {};
@@ -21,6 +21,13 @@ export const validateStep1 = (data) => {
         // Business Unit is handled in component but good to add here if possible, 
         // but let's stick to what was there or move it here. 
         // StepCommon does manual BU check. We can leave it there or move it.
+    }
+
+    // AI Case validation (Optional for Store)
+    if (data.jobType !== 'Store') {
+        if (!data.aiCase || data.aiCase.trim() === '') {
+            errors.aiCase = 'Este campo é obrigatório';
+        }
     }
 
     if (data.aiCase) {

@@ -216,7 +216,7 @@ const StepCommon = () => {
 
                 <div className="col-span-full">
                     <Input
-                        label="Link do Case de IA"
+                        label={state.jobType === 'Store' ? "Link do Case de IA (Opcional)" : "Link do Case de IA"}
                         name="aiCase"
                         value={state.aiCase}
                         onChange={handleChange}
