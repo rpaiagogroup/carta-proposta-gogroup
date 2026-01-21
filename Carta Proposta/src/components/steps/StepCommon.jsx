@@ -4,6 +4,7 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import { validateStep1 } from '../../utils/validation';
+import { VR_RULES } from '../../utils/businessRules';
 import { ArrowRight } from 'lucide-react';
 
 const AREAS = [
@@ -46,7 +47,9 @@ const StepCommon = () => {
             validationErrors.workplaceType = 'Selecione o tipo de local de trabalho';
         }
 
-        if (!state.businessUnit) validationErrors.businessUnit = 'Selecione a unidade de negócio';
+        if (state.jobType !== 'Store' && !state.businessUnit) {
+            validationErrors.businessUnit = 'Selecione a unidade de negócio';
+        }
 
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
@@ -65,6 +68,30 @@ const StepCommon = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="col-span-full mb-4">
+                    <label className="text-sm font-medium text-slate-700 mb-2 block">Tipo de Vaga</label>
+                    <div className="flex p-1 bg-slate-100 rounded-lg w-fit">
+                        <button
+                            onClick={() => handleChange({ target: { name: 'jobType', value: 'Corporate' } })}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${state.jobType !== 'Store'
+                                ? 'bg-white text-brand-600 shadow-sm'
+                                : 'text-slate-500 hover:text-slate-700'
+                                }`}
+                        >
+                            Corporativo / Fábrica
+                        </button>
+                        <button
+                            onClick={() => handleChange({ target: { name: 'jobType', value: 'Store' } })}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${state.jobType === 'Store'
+                                ? 'bg-white text-brand-600 shadow-sm'
+                                : 'text-slate-500 hover:text-slate-700'
+                                }`}
+                        >
+                            Loja Física
+                        </button>
+                    </div>
+                </div>
+
                 <Input
                     label="Nome do Candidato"
                     name="candidateName"
@@ -74,18 +101,20 @@ const StepCommon = () => {
                     placeholder="Ex: João Silva"
                 />
 
-                <Select
-                    label="Unidade de Negócio"
-                    name="businessUnit"
-                    value={state.businessUnit}
-                    onChange={handleChange}
-                    error={errors.businessUnit}
-                    options={[
-                        { value: 'Gocase', label: 'Gocase' },
-                        { value: 'Gobeaute', label: 'Gobeaute' },
-                        { value: 'Gogroup', label: 'Gogroup' },
-                    ]}
-                />
+                {state.jobType !== 'Store' && (
+                    <Select
+                        label="Unidade de Negócio"
+                        name="businessUnit"
+                        value={state.businessUnit}
+                        onChange={handleChange}
+                        error={errors.businessUnit}
+                        options={[
+                            { value: 'Gocase', label: 'Gocase' },
+                            { value: 'Gobeaute', label: 'Gobeaute' },
+                            { value: 'Gogroup', label: 'Gogroup' },
+                        ]}
+                    />
+                )}
 
                 <div className="col-span-full h-px bg-slate-100 my-2" />
 
@@ -99,31 +128,35 @@ const StepCommon = () => {
                 />
 
                 <Input
-                    label="Cargo / Função"
+                    label={state.jobType === 'Store' ? "Cargo de Admissão" : "Cargo / Função"}
                     name="roleTitle"
                     value={state.roleTitle}
                     onChange={handleChange}
                     error={errors.roleTitle}
-                    placeholder="Ex: Desenvolvedor Senior"
+                    placeholder={state.jobType === 'Store' ? "Ex: Vendedor" : "Ex: Desenvolvedor Senior"}
                 />
 
-                <Select
-                    label="Área / Time"
-                    name="area"
-                    value={state.area}
-                    onChange={handleChange}
-                    error={errors.area}
-                    options={AREAS.map(a => ({ value: a, label: a }))}
-                />
+                {state.jobType !== 'Store' && (
+                    <Select
+                        label="Área / Time"
+                        name="area"
+                        value={state.area}
+                        onChange={handleChange}
+                        error={errors.area}
+                        options={AREAS.map(a => ({ value: a, label: a }))}
+                    />
+                )}
 
-                <Input
-                    label="Gestor Imediato"
-                    name="manager"
-                    value={state.manager}
-                    onChange={handleChange}
-                    error={errors.manager}
-                    placeholder="Nome do Gestor"
-                />
+                {state.jobType !== 'Store' && (
+                    <Input
+                        label="Gestor Imediato"
+                        name="manager"
+                        value={state.manager}
+                        onChange={handleChange}
+                        error={errors.manager}
+                        placeholder="Nome do Gestor"
+                    />
+                )}
 
                 <Input
                     label="Data de Início"
@@ -134,19 +167,33 @@ const StepCommon = () => {
                     error={errors.startDate}
                 />
 
+                {state.jobType === 'Store' && (
+                    <Input
+                        label="Horário"
+                        name="storeSchedule"
+                        value={state.storeSchedule}
+                        onChange={handleChange}
+                        error={errors.storeSchedule}
+                        placeholder="Ex: 10:00 - 18:00"
+                    />
+                )}
+
                 <Select
                     label="Unidade / Local"
                     name="locationUnit"
                     value={state.locationUnit}
                     onChange={handleChange}
                     error={errors.locationUnit}
-                    options={[
-                        { value: 'Fortaleza', label: 'Fortaleza' },
-                        { value: 'São Paulo', label: 'São Paulo' },
-                        { value: 'Extrema', label: 'Extrema' },
-                        { value: 'Itapeva', label: 'Itapeva' },
-                        { value: 'Itapevi', label: 'Itapevi' },
-                    ]}
+                    options={state.jobType === 'Store'
+                        ? VR_RULES.STORE_LOCATIONS.map(l => ({ value: l, label: l }))
+                        : [
+                            { value: 'Fortaleza', label: 'Fortaleza' },
+                            { value: 'São Paulo', label: 'São Paulo' },
+                            { value: 'Extrema', label: 'Extrema' },
+                            { value: 'Itapeva', label: 'Itapeva' },
+                            { value: 'Itapevi', label: 'Itapevi' },
+                        ]
+                    }
                 />
 
                 {showWorkplaceType && (
@@ -185,7 +232,7 @@ const StepCommon = () => {
                     <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
             </div>
-        </div>
+        </div >
     );
 };
 

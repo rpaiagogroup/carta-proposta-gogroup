@@ -20,7 +20,11 @@ export const INITIAL_STATE = {
     locationUnit: '', // Fortaleza, SP, Extrema, Fábrica
     workplaceType: '', // Fábrica, Escritório (only for Extrema/Itapeva/Itapevi)
     notes: '',
-    aiCase: '', // NEW: Link or text for AI Case
+    aiCase: '', // Link or text for AI Case
+
+    // Physical Store Specific
+    jobType: 'Corporate', // 'Corporate' | 'Store'
+    storeSchedule: '', // e.g. "10:00 - 18:00"
 
     // Modalidade Selection
     modalidade: '', // CLT, PJ, Estágio

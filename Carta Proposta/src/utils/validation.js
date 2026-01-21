@@ -1,5 +1,5 @@
 
-const REQUIRED_COMMON = ['candidateName', 'roleTitle', 'area', 'manager', 'startDate', 'locationUnit', 'recruiterName', 'aiCase'];
+const REQUIRED_COMMON = ['candidateName', 'roleTitle', 'startDate', 'locationUnit', 'recruiterName', 'aiCase'];
 
 export const validateStep1 = (data) => {
     const errors = {};
@@ -8,6 +8,20 @@ export const validateStep1 = (data) => {
             errors[field] = 'Este campo é obrigatório';
         }
     });
+
+    if (data.jobType === 'Store') {
+        if (!data.storeSchedule || data.storeSchedule.trim() === '') {
+            errors.storeSchedule = 'Horário é obrigatório';
+        }
+        // Area/Manager/BusinessUnit skipped for Store
+    } else {
+        // Corporate Mandatory Fields
+        if (!data.area) errors.area = 'Selecione a área';
+        if (!data.manager) errors.manager = 'Informe o gestor';
+        // Business Unit is handled in component but good to add here if possible, 
+        // but let's stick to what was there or move it here. 
+        // StepCommon does manual BU check. We can leave it there or move it.
+    }
 
     if (data.aiCase) {
         // Simple check: must have at least a dot and 3 chars, or http, or www
