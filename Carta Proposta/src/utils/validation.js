@@ -68,7 +68,7 @@ export const validateStep2 = (data) => {
 
     if (data.modalidade === 'PJ') {
         if (!data.contractValue) errors.contractValue = 'Valor do contrato obrigatório';
-        if (!data.billingCycle) errors.billingCycle = 'Ciclo de faturamento obrigatório';
+        //if (!data.billingCycle) errors.billingCycle = 'Ciclo de faturamento obrigatório';
         if (!data.pjDescription || data.pjDescription.trim() === '') {
             errors.pjDescription = 'Descrição das funções é obrigatória para PJ';
         }
