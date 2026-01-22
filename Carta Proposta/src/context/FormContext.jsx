@@ -41,6 +41,11 @@ export const INITIAL_STATE = {
     contractValue: '',
     pjDescription: '', // NEW: Description of functions
 
+    // Variable Remuneration
+    hasVariableRemuneration: false,
+    variableValue: '',
+    annualBonusValue: '',
+
     // Final Review
     cargoEspecifico: false,
     referenceCkLink: '',

@@ -122,6 +122,10 @@ const processedData = {
     horario: body.storeSchedule || '',
     tipoVaga: body.jobType || 'Corporate',
 
+    // Remuneração Variável
+    variavel: body.hasVariableRemuneration ? body.variableValue : '',
+    bonus_anual: body.hasVariableRemuneration ? body.annualBonusValue : '',
+
     // Flag de unidade Extrema
     isExtrema: String(unidade || '').trim().toLowerCase() === 'extrema',
 

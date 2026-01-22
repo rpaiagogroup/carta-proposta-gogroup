@@ -23,6 +23,41 @@ const ModalidadeCard = ({ label, icon: Icon, selected, onClick }) => (
     </button>
 );
 
+const VariableRemunerationSection = ({ state, updateField, handleChange, errors }) => (
+    <div className="md:col-span-full mt-4 p-4 border rounded-lg bg-slate-50">
+        <label className="flex items-center gap-2 cursor-pointer mb-4 w-fit">
+            <input
+                type="checkbox"
+                name="hasVariableRemuneration"
+                checked={state.hasVariableRemuneration}
+                onChange={(e) => updateField('hasVariableRemuneration', e.target.checked)}
+                className="w-5 h-5 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+            />
+            <span className="text-sm font-medium text-slate-700">Este cargo possui remuneração variável / bônus?</span>
+        </label>
+
+        {state.hasVariableRemuneration && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2">
+                <Input
+                    label="Variável (Descrição/Valor)"
+                    name="variableValue"
+                    value={state.variableValue}
+                    onChange={handleChange}
+                    placeholder="Ex: Até 2 salários conforme metas..."
+                    error={errors?.variableValue}
+                />
+                <Input
+                    label="Bônus Anual (Descrição/Valor)"
+                    name="annualBonusValue"
+                    value={state.annualBonusValue}
+                    onChange={handleChange}
+                    placeholder="Ex: Bônus de performance anual..."
+                />
+            </div>
+        )}
+    </div>
+);
+
 const StepModalidade = () => {
     const { state, updateField, setStep } = useForm();
     const [vrInfo, setVrInfo] = useState(null);
@@ -158,6 +193,8 @@ const StepModalidade = () => {
                                 </p>
                             )}
                         </div>
+
+                        <VariableRemunerationSection state={state} updateField={updateField} handleChange={handleChange} errors={errors} />
                     </div>
                 )}
 
@@ -187,9 +224,11 @@ const StepModalidade = () => {
                             {errors.pjDescription && <span className="text-xs text-red-500">{errors.pjDescription}</span>}
                         </div>
 
-                        <div className="md:col-span-2 text-sm text-slate-500 italic">
+                        <div className="md:col-span-2 text-sm text-slate-500 italic mb-2">
                             * Modalidade PJ não contempla Vale Refeição.
                         </div>
+
+                        <VariableRemunerationSection state={state} updateField={updateField} handleChange={handleChange} errors={errors} />
                     </div>
                 )}
 

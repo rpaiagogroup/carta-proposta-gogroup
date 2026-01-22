@@ -50,6 +50,12 @@ const StepFinal = () => {
                 delete rawData.benefits;
             }
 
+            // Cleanup Variable Remuneration if not enabled
+            if (!rawData.hasVariableRemuneration) {
+                delete rawData.variableValue;
+                delete rawData.annualBonusValue;
+            }
+
             const payload = {
                 ...rawData,
                 submittedAt: new Date().toISOString()
@@ -158,6 +164,13 @@ const StepFinal = () => {
 
                     {state.modalidade === 'Estágio' && (
                         <SummaryItem label="Valor da Bolsa" value={state.bolsa} />
+                    )}
+
+                    {state.hasVariableRemuneration && (
+                        <>
+                            <SummaryItem label="Remuneração Variável" value={state.variableValue} fullWidth />
+                            <SummaryItem label="Bônus Anual" value={state.annualBonusValue} fullWidth />
+                        </>
                     )}
                 </dl>
             </div>

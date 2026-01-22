@@ -78,6 +78,13 @@ export const validateStep2 = (data) => {
         if (!data.bolsa) errors.bolsa = 'Valor da bolsa obrigatório';
     }
 
+    if (data.hasVariableRemuneration) {
+        if ((!data.variableValue || data.variableValue.trim() === '') &&
+            (!data.annualBonusValue || data.annualBonusValue.trim() === '')) {
+            errors.variableValue = 'Informe a remuneração variável ou o bônus anual';
+        }
+    }
+
     return errors;
 };
 
