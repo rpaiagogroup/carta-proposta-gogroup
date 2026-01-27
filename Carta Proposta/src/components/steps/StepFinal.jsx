@@ -217,6 +217,30 @@ const StepFinal = () => {
                         placeholder="Alguma observação importante para a carta..."
                     />
                 </div>
+
+                {/* BGC Legal Check */}
+                <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
+                    <div className="flex items-start gap-3">
+                        <input
+                            id="bgcJuridico"
+                            type="checkbox"
+                            className="mt-1 w-4 h-4 text-brand-600 border-slate-300 rounded focus:ring-brand-500"
+                            checked={state.bgcJuridico}
+                            onChange={(e) => updateField('bgcJuridico', e.target.checked)}
+                        />
+                        <div className="flex-1">
+                            <label htmlFor="bgcJuridico" className="font-medium text-slate-900 block select-none cursor-pointer">
+                                O BGC foi realizado junto ao time jurídico?
+                            </label>
+                            <p className="text-slate-500 text-sm mt-1">
+                                A confirmação é obrigatória para prosseguir com a geração da proposta.
+                            </p>
+                            {errors.bgcJuridico && (
+                                <p className="text-red-600 text-sm mt-1 font-medium">{errors.bgcJuridico}</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {result?.status === 'error' && (

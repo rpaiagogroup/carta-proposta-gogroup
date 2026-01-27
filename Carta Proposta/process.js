@@ -126,6 +126,9 @@ const processedData = {
     variavel: body.hasVariableRemuneration ? body.variableValue : '',
     bonus_anual: body.hasVariableRemuneration ? body.annualBonusValue : '',
 
+    // BGC Legal Check
+    check_time_juridico: body.bgcJuridico ? 'Sim' : 'Não',
+
     // Flag de unidade Extrema
     isExtrema: String(unidade || '').trim().toLowerCase() === 'extrema',
 

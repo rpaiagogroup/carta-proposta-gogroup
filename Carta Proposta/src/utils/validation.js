@@ -90,8 +90,14 @@ export const validateStep2 = (data) => {
 
 export const validateStep3 = (data) => {
     const errors = {};
+
     if (data.cargoEspecifico && (!data.referenceCkLink || data.referenceCkLink.trim() === '')) {
         errors.referenceCkLink = 'Cargo específico exige link de Reference Check';
     }
+
+    if (!data.bgcJuridico) {
+        errors.bgcJuridico = 'Confirmação do BGC com jurídico é obrigatória';
+    }
+
     return errors;
 };

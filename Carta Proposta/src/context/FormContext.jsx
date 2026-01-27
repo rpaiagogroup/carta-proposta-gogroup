@@ -49,6 +49,7 @@ export const INITIAL_STATE = {
     // Final Review
     cargoEspecifico: false,
     referenceCkLink: '',
+    bgcJuridico: false,
 
     // Meta
     requestId: null,
