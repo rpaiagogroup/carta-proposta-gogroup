@@ -214,15 +214,19 @@ const StepCommon = () => {
 
                 <div className="col-span-full h-px bg-slate-100 my-2" />
 
-                <div className="col-span-full">
-                    <Input
-                        label={state.jobType === 'Store' ? "Link do Case de IA (Opcional)" : "Link do Case de IA"}
+                <div className="col-span-full flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-slate-700">
+                        {state.jobType === 'Store' ? "Feedback do Case de IA (Opcional)" : "Feedback do Case de IA"}
+                    </label>
+                    <textarea
                         name="aiCase"
                         value={state.aiCase}
                         onChange={handleChange}
-                        error={errors.aiCase}
-                        placeholder="www.exemplo.com.br"
+                        rows={4}
+                        placeholder="Cole aqui o texto de feedback enviado pelo avaliador..."
+                        className={`px-3 py-2 rounded-lg border bg-white text-slate-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-500/20 resize-none ${errors.aiCase ? 'border-red-500 focus:border-red-500' : 'border-slate-200 focus:border-brand-500'}`}
                     />
+                    {errors.aiCase && <span className="text-xs text-red-500">{errors.aiCase}</span>}
                 </div>
             </div>
 
