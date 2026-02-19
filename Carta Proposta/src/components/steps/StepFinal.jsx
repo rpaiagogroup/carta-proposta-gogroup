@@ -67,7 +67,13 @@ const StepFinal = () => {
                 body: JSON.stringify(payload)
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data = {};
+            try {
+                data = text ? JSON.parse(text) : {};
+            } catch (_) {
+                data = {};
+            }
 
             if (response.ok) {
                 setResult({ status: 'success', data });

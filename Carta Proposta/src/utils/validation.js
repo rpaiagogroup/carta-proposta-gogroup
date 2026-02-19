@@ -30,14 +30,6 @@ export const validateStep1 = (data) => {
         }
     }
 
-    if (data.aiCase) {
-        // Simple check: must have at least a dot and 3 chars, or http, or www
-        const isValid = data.aiCase.includes('http') || data.aiCase.includes('www.') || data.aiCase.includes('.com');
-        if (!isValid) {
-            errors.aiCase = 'Insira um link válido (Ex: www.exemplo.com.br)';
-        }
-    }
-
     return errors;
 };
 
