@@ -29,6 +29,20 @@ const StepCommon = () => {
             setErrors(prev => ({ ...prev, [name]: null }));
         }
 
+        // Reset type-specific fields when switching jobType
+        if (name === 'jobType') {
+            // Always reset locationUnit since the options differ between Store and Corporate
+            updateField('locationUnit', '');
+            updateField('workplaceType', '');
+            if (value === 'Corporate') {
+                updateField('storeSchedule', '');
+            } else if (value === 'Store') {
+                updateField('area', '');
+                updateField('manager', '');
+                updateField('businessUnit', '');
+            }
+        }
+
         // Reset workplace type if location changes to one that doesn't need it
         if (name === 'locationUnit') {
             const factoryLocs = ['Extrema', 'Itapeva', 'Itapevi'];

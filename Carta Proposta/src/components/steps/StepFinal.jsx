@@ -32,7 +32,12 @@ const StepFinal = () => {
             // 1. Clone state
             const rawData = { ...state };
 
-            // 2. Filter fields based on modalidade
+            // 2. Clean up Store-specific fields for Corporate
+            if (rawData.jobType !== 'Store') {
+                delete rawData.storeSchedule;
+            }
+
+            // 3. Filter fields based on modalidade
             if (rawData.modalidade === 'CLT') {
                 delete rawData.bolsa;
                 delete rawData.contractValue;
@@ -136,7 +141,7 @@ const StepFinal = () => {
                     {state.manager && <SummaryItem label="Gestor Imediato" value={state.manager} />}
                     <SummaryItem label="Data de Início" value={state.startDate?.split('-').reverse().join('/')} />
                     <SummaryItem label="Local de Trabalho" value={`${state.locationUnit} ${state.workplaceType ? `- ${state.workplaceType}` : ''}`} />
-                    {state.storeSchedule && <SummaryItem label="Horário" value={state.storeSchedule} />}
+                    {state.jobType === 'Store' && state.storeSchedule && <SummaryItem label="Horário" value={state.storeSchedule} />}
                 </dl>
             </div>
 
